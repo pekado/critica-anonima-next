@@ -54,17 +54,17 @@ export default function RootLayout({
                                     <Link
                                         className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current hover:text-red-700"
                                         href="/">
-                                        Home
+                                        Inicio
                                     </Link>
                                     <Link
                                         className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current hover:text-red-700"
-                                        href="/notes">
-                                        Notes
+                                        href="/poems">
+                                        Poemas
                                     </Link>
                                     <Link
                                         className="block h-16 border-b-4 border-transparent leading-[4rem] hover:border-current hover:text-red-700"
-                                        href="/notes/createPoem">
-                                        Create
+                                        href="/poems/createPoem">
+                                        Crear
                                     </Link>
 
 
@@ -156,7 +156,7 @@ export default function RootLayout({
                     <footer aria-label="Site Footer" className="bg-white text-center w-full ">
                         <div className="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
                             <div className="mx-auto max-w-3xl space-y-6">
-                                <div className="flex justify-center gap-6 shadow-2xl">
+                                <div className="flex justify-center gap-6">
                                     <Link
                                         className="text-blue-500 hover:text-blue-500/75"
                                         href="/"

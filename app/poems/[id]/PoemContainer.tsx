@@ -1,13 +1,13 @@
 'use client'
 
 import { Slate, Editable } from 'slate-react';
-import { Descendant } from 'slate';
-import { useMemo } from 'react'
+import { useMemo, useCallback } from 'react'
 import { withReact } from "slate-react";
 import { createEditor } from "slate";
 
 
 export default function PoemContainer({ content }: any) {
+    const renderElement = useCallback(props => <Element {...props} />, [])
     const editor = useMemo(() => withReact(createEditor()), [])
     return (
         <div
@@ -15,11 +15,21 @@ export default function PoemContainer({ content }: any) {
         >
             <Slate editor={editor} value={content}>
                 <Editable readOnly
+                    renderElement={renderElement}
+
                     className='editor  block rounded-xl min-h-screen bg-white p-6 sm:p-8 mx-auto max-w-3xl space-y-6 '
                     placeholder="Enter some plain text..." />
             </Slate>
         </div >
     )
+}
+const Element = ({ attributes, children, element }) => {
+    switch (element.type) {
+        case 'title':
+            return <h2 {...attributes}>{children}</h2>
+        case 'paragraph':
+            return <p className='max-w-fit' {...attributes}>{children}</p>
+    }
 }
 
 

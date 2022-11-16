@@ -10,7 +10,7 @@ interface Poem {
 
 export default function Card({ poem }: { poem: Poem }) {
     return (
-        <Link href={`/notes/${poem.id}`}>
+        <Link href={`/poems/${poem.id}`}>
             <div
                 className="rounded-2xl bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-1 shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)] w-56 h-96"
             >

@@ -15,7 +15,7 @@ export default function CreatePoem() {
     }
 
     const submitPoem = async () => {
-        const res = await fetch('http://127.0.0.1:8090/api/collections/notes/records', {
+        const res = await fetch('http://127.0.0.1:8090/api/collections/poems/records', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ export default function CreatePoem() {
     return (
         <>
             <Editor onChange={handleChange} />
-            <button className='rounded-2xl w-56 mt-10 float-right h-12 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-1 shadow-2xl' onClick={submitPoem}>Crear</button>
+            <button className='rounded-2xl w-56 mt-10 float-right h-12 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-1 shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)]' onClick={submitPoem}>Crear</button>
         </>
     )
 }
