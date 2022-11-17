@@ -1,25 +1,54 @@
+import Comment from './Comment';
+import { CommentInterface } from '../../../interfaces/Comments'
+function asyncComponent<T, R>(fn: (arg: T) => Promise<R>): (arg: T) => R {
+    return fn as (arg: T) => R;
+}
+interface Props {
+    comments: CommentInterface[]
+}
 
-import { Comment } from '../../../interfaces/Comments'
+const getLikes = async ({ comments }: Props) => {
+    const getLiked = async (commentId: string) => {
+        const res = await fetch(
+            `http://127.0.0.1:8090/api/collections/liked/records/?filter=(comment_id='${commentId}')`,
+            {
+                next: { revalidate: 10 },
+            }
+        );
+        const data = await res.json();
+        return data.items
+    }
+
+    const commentsWithLikes = comments.map(async (comment) => {
+        const liked = await getLiked(comment.id)
+        if (liked) comment.userLike = liked
+        return comment
+    })
+
+    return await Promise.all(commentsWithLikes).then((comments) => {
+        return comments
+    })
+
+}
 
 
-export default function CommentsList({ comments }: any) {
+
+
+
+const CommentsList = asyncComponent(async ({ comments }: Props) => {
+    const commentsWithLikes = await getLikes({ comments })
+    console.log(commentsWithLikes)
 
 
     return (
         <div className='my-8'>
-            {comments?.map((comment: Comment) => (
-                <div
-
-                    className="shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)] rounded-2xl my-10 w-5/6 h-auto even:ml-auto  odd:text-left even:text-right odd:bg-gradient-to-r from-indigo-400 via-purple-500 to-rose-400 even:bg-gradient-to-l from-emerald-600 via-cyan-600 to-orange-600 p-1 "
-                >
-                    <div key={comment.id} className="border border-gray-300 rounded-2xl p-4 mb-4 bg-white ">
-                        <p>{comment.comment}</p>
-                        <p className="text-sm text-gray-500 mt-3">
-                            {new Date(comment.created).toLocaleDateString()}
-                        </p>
-                    </div>
-                </div>
+            {commentsWithLikes?.map((comment: any) => (
+                <>
+                    <Comment comment={comment} key={comment.id} />
+                </>
             ))}
         </div>
     )
-}
+})
+
+export default CommentsList
